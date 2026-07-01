@@ -26,14 +26,19 @@ if prompt := st.chat_input("Type a message..."):
                       parts=[types.Part(text=m["parts"][0])])
         for m in trimmed
     ]
-    response = client.models.generate_content(
-        model=MODEL,
-        contents=contents,
-        config=types.GenerateContentConfig(
-            system_instruction=SYSTEM_PROMPT,
-            max_output_tokens=MAX_TOKENS,
-        ),
-    )
-    reply = response.text
+    try:
+        response = client.models.generate_content(
+            model=MODEL,
+            contents=contents,
+            config=types.GenerateContentConfig(
+                system_instruction=SYSTEM_PROMPT,
+                max_output_tokens=MAX_TOKENS,
+            ),
+        )
+        reply = response.text
+
+    except Exception as e:
+        st.error(f"{type(e).__name__}: {e}")
+        st.stop()
     st.session_state.history.append({"role": "model", "parts": [reply]})
     st.chat_message("assistant").write(reply)
