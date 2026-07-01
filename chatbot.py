@@ -1,5 +1,6 @@
 # chatbot.py
 import sys
+import os
 from google import genai
 from google.genai import types
 from config import API_KEY, MODEL, MAX_TOKENS, MAX_HIST_CHARS, SYSTEM_PROMPT
@@ -14,7 +15,9 @@ BOLD   = "\033[1m"
 DIM    = "\033[2m"
 RESET  = "\033[0m"
 
-client = genai.Client()
+client = genai.Client(
+    api_key=os.getenv("GOOGLE_API_KEY")
+)
 
 def validate():
     if not API_KEY:

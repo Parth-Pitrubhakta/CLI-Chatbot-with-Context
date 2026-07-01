@@ -7,7 +7,7 @@ import os
 
 client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 
-st.title("🤖 CLI Chatbot (Gemini)")
+st.title("🤖 Chatbot (Gemini)")
 
 if "history" not in st.session_state:
     st.session_state.history = []
